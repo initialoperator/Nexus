@@ -2,6 +2,8 @@ package com.chrystian.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user_info")
@@ -19,6 +21,15 @@ public class UserInfo implements Serializable {
 
     @Column(name = "password")
     private String password;
+
+    @Transient
+    private final List<String> privileges= new ArrayList<>();
+
+    public UserInfo(){
+        privileges.add("USER");
+        privileges.add("ADMIN");
+
+    }
 
     public Long getUserId() {
         return userId;
@@ -43,4 +54,10 @@ public class UserInfo implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<String> getPrivileges() {
+        return privileges;
+    }
+
+
 }

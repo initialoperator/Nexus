@@ -14,23 +14,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 //    @Autowired
-//    private UserDetailsService userInfoService;
+//    private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserDetailsService userInfoService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
-//                .requestMatchers().antMatchers("/login", "/logout", "/oauth/authorize", "/oauth/confirm_access")
-//                .and()
+        .authorizeRequests()
+                .antMatchers("/", "/login").permitAll()
+                .and()
+                .requestMatchers().antMatchers("/login", "/logout", "/oauth/authorize", "/oauth/confirm_access","/h2","/h2_console/**")
+                .and()
                 .authorizeRequests()
-                .antMatchers("/h2","/h2_console/**").hasRole("ADMIN")
+//                .antMatchers("/h2","/h2_console/**").hasAuthority("ADMIN")
+//                .antMatchers("/h2","/h2_console/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll();
@@ -38,6 +42,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         // @formatter:on
     }
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/", "/home").permitAll()
+//                .antMatchers("/admin", "/h2_console/**").hasRole("ADMIN").anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin().loginPage("/login").permitAll()
+//                .and()
+//                .logout().permitAll();
+//        http.exceptionHandling().accessDeniedPage("/403");
+//        http.csrf().disable();
+//        http.headers().frameOptions().disable();
+//    }
 
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
@@ -49,18 +68,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+//        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
 //        auth.parentAuthenticationManager(authenticationManager);
-//        auth.authenticationProvider(authenticationProvider());
+        auth.authenticationProvider(authenticationProvider());
     }
 
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider(){
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setUserDetailsService(this.userInfoService);
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        return authenticationProvider;
-//    }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(this.userInfoService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
