@@ -41,4 +41,6 @@ public class ApplicationController {
 
         return "redirect:/home";
     }
+
+
 }

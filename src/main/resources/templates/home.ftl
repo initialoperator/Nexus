@@ -2,7 +2,10 @@
 <head></head>
 
 <body>
+<#if user?exists>
 <h1>This is the homepage for the user ${user.username}</h1>
+</#if>
+
 
 <security:authorize access="hasRole('ROLE_USER')">
     This text is only visible to a user
