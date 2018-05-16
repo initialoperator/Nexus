@@ -37,7 +37,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/h2","/h2_console/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll();
+                .formLogin().loginPage("/login").permitAll()
+                .successForwardUrl("/confirm_access")
+        ;
         http.csrf().disable();
         http.headers().frameOptions().disable();
         // @formatter:on

@@ -1,10 +1,10 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css"
-  href="webjars/bootstrap/css/bootstrap.min.css" />
-<script type="text/javascript" src="webjars/jquery/jquery.min.js"></script>
+  href="bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript"
-  src="webjars/bootstrap/js/bootstrap.min.js"></script>
+  src="bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <#if RequestParameters['error']??>
@@ -22,7 +22,7 @@
 		    <label for="password">Password:</label>
 		    <input type="password" class="form-control" id="password" name="password"/>
 		  </div>
-		  <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		  <#--<input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
 		  <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
