@@ -14,7 +14,7 @@
     <br />
 </security:authorize>
 
-<a href="<c:url value="/logout" />">Logout</a>
 
+<button class="btn-warning"><a class="btn-warning" href="<c:url value='/logout' />">Logout</a></button>
 </body>
 </html>

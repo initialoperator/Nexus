@@ -28,9 +28,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http
         .authorizeRequests()
-                .antMatchers("/", "/login").permitAll()
+                .antMatchers("/login").permitAll()
                 .and()
-                .requestMatchers().antMatchers("/login", "/logout", "/oauth/authorize", "/oauth/confirm_access","/h2","/h2_console/**")
+                .requestMatchers().antMatchers("/login", "/logout", "/home", "/h2","/h2_console/**")
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/h2","/h2_console/**").hasAuthority("ADMIN")
@@ -45,20 +45,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/", "/home").permitAll()
-//                .antMatchers("/admin", "/h2_console/**").hasRole("ADMIN").anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin().loginPage("/login").permitAll()
-//                .and()
-//                .logout().permitAll();
-//        http.exceptionHandling().accessDeniedPage("/403");
-//        http.csrf().disable();
-//        http.headers().frameOptions().disable();
-//    }
 
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()

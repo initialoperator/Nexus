@@ -14,7 +14,7 @@ public class WebSecurityHandlerImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return userService.loadUserByUsername(username);
     }
 
 }
